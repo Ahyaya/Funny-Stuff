@@ -10,6 +10,8 @@ struct UTC_time
     double sec;
 };
 
+char *monv[12]={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+
 int isLeapYear(int year)
 {
     if(year%100)
@@ -41,14 +43,10 @@ double UTC2TTsec(struct UTC_time time)
 
 int main(int argc, char const *argv[])
 {
-    struct UTC_time c_time;
-    c_time.year=2000;
-    c_time.month=6;
-    c_time.day=23;
-    c_time.hr=8;
-    c_time.min=37;
-    c_time.sec=23.33;
-    
-    printf("TTsec=%lf\n",UTC2TTsec(c_time));
+    //Setup c_time as [int year],[int month],[int day],[int hr],[int min],[double sec]
+    struct UTC_time c_time={2019,3,4,4,6,3.22};
+
+    printf("%d %s %d @ %02d:%02d:%06.3lf\n",c_time.year,monv[c_time.month-1],c_time.day,c_time.hr,c_time.min,c_time.sec);
+    printf("%lf\n",UTC2TTsec(c_time));
     return 0;
 }
