@@ -77,7 +77,7 @@ int main(int argc, char const *argv[])
         theta+=(k1/6+k2/3+k3/3+k4/6);
         t+=dt;
         r=au_a*(1-e*e)/(1-e*cos(theta));
-        fprintf(outf,"%lf\t%lf\t%lf\n",t,r,theta);
+        fprintf(outf,"%.3lf\t%lf\t%.10lf\n",t,r,theta);
     }
 
     fclose(outf);
