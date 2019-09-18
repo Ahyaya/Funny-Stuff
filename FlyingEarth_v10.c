@@ -116,7 +116,7 @@ int main(int argc, char const *argv[])
         
     }
 
-    printf("Destination: %d %s %d @ %02d:%02d:%06.3lf\n\n",c_time.year,monv[c_time.month-1],c_time.day,c_time.hr,c_time.min,c_time.sec);
+    printf("Destination: %d %s %d @ %02d:%02d:%06.3lf UTC\n\n",c_time.year,monv[c_time.month-1],c_time.day,c_time.hr,c_time.min,c_time.sec);
     TT_d=UTC2TTsec(c_time);printf("J2000 Terrestrial Time: %.3lf\n",TT_d);
 
     if(FORCE_TRACE){printf("Force Trace mode activated!\n");steplimit*=4;}else{while(TT_d>t+T){t+=T;}}
