@@ -79,7 +79,7 @@ int main(int argc, char const *argv[])
 
     double r,theta=ref.theta,t=ref.t,alpha=ref.alpha,delta=ref.delta;
 
-    struct UTC_time c_time={2030,6,7,15,8,3.5};
+    struct UTC_time c_time={2030,4,25,15,8,3.5};
 
     if(argc>1)
     {
@@ -146,14 +146,16 @@ int main(int argc, char const *argv[])
     while(theta>2*pi){theta-=2*pi;}
     while(alpha+pi<0){alpha+=2*pi;}
 
-    sg_1=(alpha>0)?(1):(-1);
-    sg_2=(delta>0)?(1):(-1);
-    alpha*=sg_1;delta*=sg_2;
+    char Hor[2]="WE",Ver[2]="SN";
+    sg_1=(alpha>0)?(1):(0);
+    sg_2=(delta>0)?(1):(0);
+    alpha=fabs(alpha);delta=fabs(delta);
     degtran_0[0]=(int) (theta*180/pi);degtran_0[1]=(int) 60*(theta*180/pi-degtran_0[0]);degtran_0[2]=(int) 60*(60*(theta*180/pi-degtran_0[0])-degtran_0[1]);
     degtran_1[0]=(int) (alpha*180/pi);degtran_1[1]=(int) 60*(alpha*180/pi-degtran_1[0]);degtran_1[2]=(int) 60*(60*(alpha*180/pi-degtran_1[0])-degtran_1[1]);
     degtran_2[0]=(int) (delta*180/pi);degtran_2[1]=(int) 60*(delta*180/pi-degtran_2[0]);degtran_2[2]=(int) 60*(60*(delta*180/pi-degtran_2[0])-degtran_2[1]);
-    printf("Terrestrial Time footprint: %.3lf\nDistance: %.3lf km\nTheta: %d°%d\'%d\"\n",t,r/1000,degtran_0[0],degtran_0[1],degtran_0[2]);
-    printf("Alpha: %d°%d\'%d\"\n",sg_1*degtran_1[0],degtran_1[1],degtran_1[2]);
-    printf("Delta: %d°%d\'%d\"\n",sg_2*degtran_2[0],degtran_2[1],degtran_2[2]);
+    printf("Terrestrial Time footprint: %.3lf\nDistance to Sun: %.3lf km\nTheta from Aphelion: %d°%d\'%d\"\n\n",t,r/1000,degtran_0[0],degtran_0[1],degtran_0[2]);  
+    printf("Delta: %d°%d\'%d\" %c\n",degtran_2[0],degtran_2[1],degtran_2[2],Ver[sg_2]);
+    printf("Alpha: %d°%d\'%d\" %c\n",degtran_1[0],degtran_1[1],degtran_1[2],Hor[sg_1]);
+    
     return 0;
 }
