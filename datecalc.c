@@ -12,6 +12,8 @@ struct UTC_time
 } d_time;
 
 char *monv[12]={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+char *weekflag[7]={"Sat","Sun","Mon","Tue","Wed","Thu","Fri"};
+int pf_week=0;
 
 int TypeDet(char * str)
 {
@@ -117,6 +119,7 @@ double Utrans(char *str)
 
 int TTsec2UTC(double t)
 {
+    pf_week=(int) ((t+TTref_sec)/86400);pf_week=pf_week%7;
     struct UTC_time time={2000,1,1,11,58,55.816};
     int pf=0,yearType[2]={365,366},flag[5]={0};
     int daylist[2][13]={0,31,28,31,30,31,30,31,31,30,31,30,31,0,31,29,31,30,31,30,31,31,30,31,30,31};
@@ -190,10 +193,10 @@ int main(int argc, char *argv[])
             printf("Total sec left: %.2lfsec\n",TT_result);
             if(type_1>0){return 0;}
         }
-        if(TT_result>0)
+        if(TT_result>=0)
         {
             TTsec2UTC(TT_result);
-            printf("UTC Destination:\n%d %s %d @ %d:%d:%.2lf\n",d_time.year,monv[d_time.month-1],d_time.day,d_time.hr,d_time.min,d_time.sec);
+            printf("UTC Destination:\n(%s)\t%d %s %d @ %d:%d:%.2lf\n",weekflag[pf_week],d_time.year,monv[d_time.month-1],d_time.day,d_time.hr,d_time.min,d_time.sec);
             return 0;
         }
     }
